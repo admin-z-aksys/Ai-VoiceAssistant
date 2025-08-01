@@ -115,7 +115,7 @@ async def speak(audio: UploadFile = File(...)):
 
         # Generate TTS
         print("🎤 Synthesizing speech...")
-        tts_audio_bytes = tts_model.tts(assistant_text)
+        tts_audio_bytes = tts_model.tts(assistant_text,speaker="p248")
         if not tts_audio_bytes:
             raise HTTPException(status_code=500, detail="TTS failed to generate audio.")
 

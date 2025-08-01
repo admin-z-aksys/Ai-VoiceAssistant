@@ -11,7 +11,7 @@ SAMPLE_RATE = 22050
 FADE_DURATION = 0.04
 
 # Load TTS model
-model_name = "tts_models/en/ljspeech/tacotron2-DDC_ph"
+model_name = "tts_models/en/vctk/vits"
 tts_model = TTS(model_name, progress_bar=False, gpu=False)
 has_alignment = hasattr(tts_model, "tts_with_alignment")
 
@@ -54,7 +54,7 @@ def synthesize_with_phonemes(text: str) -> Optional[Dict[str, Any]]:
 
         else:
             print("⚠️ No alignment available, using g2p fallback.")
-            waveform = tts_model.tts(text)
+            waveform = tts_model.tts(text,speaker="p226")
             phonemes = [p for p in g2p(text) if p.isalpha()]
             audio_duration = len(waveform) / SAMPLE_RATE
 
