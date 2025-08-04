@@ -10,7 +10,7 @@ env/
 venv/
 ENV/
 *.egg-info/
-
+.env
 # Environment variables / secrets
 .env
 *.env
