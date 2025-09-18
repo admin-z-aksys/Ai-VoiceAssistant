@@ -32,7 +32,7 @@ print("📦 Loading faster-whisper (GPU)...")
 whisper_model = WhisperModel("tiny.en", compute_type="float16", device="cuda")
 
 print("🧠 Loading LLM model...")
-llm = ChatGroq(model="llama3-70b-8192", api_key=os.getenv("GROQ_API_KEY"))
+llm = ChatGroq(model="llama-3.1-8b-instant", api_key=os.getenv("GROQ_API_KEY"))
 memory = ConversationBufferMemory(memory_key="history", return_messages=True)
 prompt_template = PromptTemplate(
     input_variables=["history", "input", "context"],
@@ -49,6 +49,10 @@ def convert_to_wav(audio_bytes: bytes) -> bytes:
 
 def clean_text(text: str) -> str:
     return re.sub(r"[^\x00-\x7F]+", "", text)
+
+@app.get("/health")
+def home():
+    return {"message":"API is running"}
 
 @app.post("/speak")
 async def speak(request: Request):

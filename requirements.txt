@@ -21,3 +21,4 @@ coqpit-config
 torch
 torchaudio
 torchvision
+TTS==0.22.0 
