@@ -21,4 +21,5 @@ coqpit-config
 torch
 torchaudio
 torchvision
-TTS==0.22.0 
+TTS==0.22.0
+qdrant_client
