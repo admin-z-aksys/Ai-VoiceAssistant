@@ -1,31 +1,25 @@
-# ── Dockerfile ──────────────────────────────────────────────────────────────
-# Use a lightweight official Python base image
+# Use official Python image
 FROM python:3.11-slim
 
-# Install system dependencies needed for Coqui TTS phonemizer
-#  - espeak-ng provides the phoneme backend
-#  - libsndfile1 is often required for audio I/O
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        espeak-ng \
-        libsndfile1 && \
-    rm -rf /var/lib/apt/lists/*
-
-# Set working directory inside container
+# Set work directory
 WORKDIR /app
 
-# Copy only the requirements first (for better build caching)
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    libsndfile1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements and install
 COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Install Python deps (use --no-cache-dir to keep the image small)
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of your source code
+# Copy project files
 COPY . .
 
-# Expose the port that Uvicorn will listen on
+# Expose port
 EXPOSE 8000
 
-# Start the FastAPI app (adjust path if app.py lives inside /api)
+# Start app
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
-# ────────────────────────────────────────────────────────────────────────────
