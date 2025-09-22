@@ -3,6 +3,7 @@ FROM python:3.11-slim
 
 # System deps for audio & builds (ffmpeg for pydub/processing, libsndfile for soundfile)
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    espeak-ng \
     ffmpeg \
     libsndfile1 \
     git \
