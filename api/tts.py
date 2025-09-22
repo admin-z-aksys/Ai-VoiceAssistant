@@ -12,7 +12,7 @@ FADE_DURATION = 0.04
 
 # Load TTS model (GPU)
 model_name = "tts_models/en/vctk/vits"
-tts_model = TTS(model_name, progress_bar=False, gpu=True)
+tts_model = TTS(model_name, progress_bar=False, gpu=False)
 has_alignment = hasattr(tts_model, "tts_with_alignment")
 
 g2p = G2p()
@@ -92,3 +92,4 @@ def synthesize_with_phonemes(text: str) -> Optional[Dict[str, Any]]:
     except Exception as e:
         print(f"❌ [TTS ERROR]: {e}")
         return None
+
