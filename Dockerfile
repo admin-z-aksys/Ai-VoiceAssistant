@@ -1,25 +1,32 @@
-# Use official Python image
+# Use a slim, production-ready Python base
 FROM python:3.11-slim
 
-# Set work directory
-WORKDIR /app
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# System deps for audio & builds (ffmpeg for pydub/processing, libsndfile for soundfile)
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     libsndfile1 \
-    && rm -rf /var/lib/apt/lists/*
+    git \
+ && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Environment
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONPATH=/app
 
-# Copy project files
+# Workdir at repo root (which contains the api/ folder)
+WORKDIR /app
+
+# Leverage Docker layer caching for deps
+COPY requirements.txt ./
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy the rest of the code
 COPY . .
 
-# Expose port
-EXPOSE 8000
+# (Optional) quick sanity import to fail fast at build time
+# RUN python -c "import importlib; importlib.import_module('api.app'); print('api.app import OK')"
 
-# Start app
-CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Use Render's PORT if present; default to 8000 locally
+CMD ["bash", "-lc", "uvicorn api.app:app --host 0.0.0.0 --port ${PORT:-8000}"]
