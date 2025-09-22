@@ -11,7 +11,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain_community.chat_models import ChatOllama
 from langchain.prompts import PromptTemplate
 from tts import speak_text
-from config import Config
+from .config import Config
 from rag import retrieve_context
 
 
@@ -249,3 +249,4 @@ class VoiceAssistant:
 if __name__ == "__main__":
     assistant = VoiceAssistant()
     assistant.run()
+
