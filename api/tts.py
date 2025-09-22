@@ -4,7 +4,7 @@ from TTS.api import TTS
 from typing import Optional, Dict, Any, List
 from g2p_en import G2p
 
-from utils import generate_morph_targets_from_phonemes
+from .utils import generate_morph_targets_from_phonemes
 
 # Constants
 SAMPLE_RATE = 22050
@@ -92,4 +92,5 @@ def synthesize_with_phonemes(text: str) -> Optional[Dict[str, Any]]:
     except Exception as e:
         print(f"❌ [TTS ERROR]: {e}")
         return None
+
 
