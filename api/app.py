@@ -9,9 +9,9 @@ from dotenv import load_dotenv
 import soundfile as sf
 import os
 
-from config import Config
-from rag import retrieve_context
-from tts import synthesize_with_phonemes
+from .config import Config
+from .rag import retrieve_context
+from .tts import synthesize_with_phonemes
 from langchain_groq import ChatGroq
 from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
