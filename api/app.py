@@ -29,7 +29,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 print("📦 Loading faster-whisper (GPU)...")
-whisper_model = WhisperModel("tiny.en", compute_type="float16", device="cuda")
+whisper_model = WhisperModel("tiny.en", compute_type="int8", device="cpu")
 
 print("🧠 Loading LLM model...")
 llm = ChatGroq(model="llama-3.1-8b-instant", api_key=os.getenv("GROQ_API_KEY"))
