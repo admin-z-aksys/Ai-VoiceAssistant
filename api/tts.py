@@ -4,7 +4,7 @@ from TTS.api import TTS
 from typing import Optional, Dict, Any, List
 from g2p_en import G2p
 
-from .utils import generate_morph_targets_from_phonemes
+from utils import generate_morph_targets_from_phonemes
 
 # Constants
 SAMPLE_RATE = 22050

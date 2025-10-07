@@ -4,16 +4,17 @@ from qdrant_client import QdrantClient
 from langchain_ollama import OllamaEmbeddings
 
 from qdrant_client.http.models import Distance, VectorParams
-from .config import Config
+from config import Config
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 
 
-embeddings = OllamaEmbeddings(
-    model="mxbai-embed-large",
-    base_url="http://localhost:11434"
+# from langchain_groq import GroqEmbeddings
+
+embeddings = HuggingFaceEmbeddings(
+    model_name="BAAI/bge-small-en-v1.5"
 )
 
 qdrant_client = QdrantClient(
@@ -23,7 +24,7 @@ qdrant_client = QdrantClient(
 
 vectorstore = Qdrant(
     client=qdrant_client,
-    collection_name="maharashtra_begging_act",
+    collection_name="Berge-bulk",
     embeddings=embeddings,
 )
 
