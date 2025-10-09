@@ -22,6 +22,7 @@ WORKDIR /app
 # Leverage Docker layer caching for deps
 COPY requirements.txt ./
 RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN python -m nltk.downloader averaged_perceptron_tagger_eng punkt -d /usr/local/nltk_data
 
 # Copy the rest of the code
 COPY . .
